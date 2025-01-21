@@ -1,0 +1,46 @@
+services:
+  gateway:
+    image: caddy:2-alpine
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    ports: [80:80, 443:443]
+    configs: [{ source: caddy, target: /etc/caddy/Caddyfile }]
+    restart: unless-stopped
+
+  gatus:
+    image: twinproduction/gatus:v5.15.0
+    env_file: .env
+    environment: &gatus-env
+      POSTGRES_USER: ${GATUS_POSTGRES_USER:?error}
+      POSTGRES_PASSWORD: ${GATUS_POSTGRES_PASSWORD:?error}
+      POSTGRES_DB: ${GATUS_POSTGRES_DB:?error}
+    configs: [{ source: gatus, target: /config/config.yaml }]
+    depends_on:
+      gatus-db: { condition: service_healthy }
+    restart: unless-stopped
+
+  gatus-db:
+    image: postgres:17
+    ports: [127.0.0.1:5432:5432]
+    volumes:
+      - gatus-db:/var/lib/postgresql/data
+    env_file: .env
+    environment: *gatus-env
+    healthcheck:
+      test: ["CMD", "pg_isready", "--dbname=$GATUS_POSTGRES_DB", "--username=$GATUS_POSTGRES_USER"]
+      interval: 5s
+      timeout: 60s
+      retries: 5
+      start_period: 30s
+      start_interval: 500ms
+    restart: unless-stopped
+
+volumes:
+  gatus-db:
+  caddy_data:
+  caddy_config:
+
+configs:
+  caddy: { file: ./Caddyfile }
+  gatus: { file: ./gatus.yaml }

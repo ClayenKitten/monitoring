@@ -1,0 +1,77 @@
+# Gatus status page config
+
+alerting:
+  telegram:
+    token: ${TELEGRAM_TOKEN}
+    id: ${TELEGRAM_USER_ID}
+
+storage:
+  type: postgres
+  path: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@gatus-db:5432/${POSTGRES_DB}?sslmode=disable"
+
+ui:
+  title: ClayenDev Status
+  link: https://clayenkitten.dev
+
+endpoints:
+  # ClayenKitten
+
+  - name: 1. Website
+    group: ClayenKitten
+    url: https://clayenkitten.dev
+    interval: 15s
+    conditions: &ok
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts: &alerts
+      - type: telegram
+        send-on-resolved: true
+    client: &client
+      timeout: 3s
+
+  - name: 2. URL Shortener
+    group: ClayenKitten
+    url: https://l.clayen.dev/cats
+    interval: 15s
+    conditions:
+      - "[STATUS] >= 300 && [STATUS] <= 399"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+    alerts: *alerts
+    client: *client
+
+  - name: 3. Network
+    group: ClayenKitten
+    url: icmp://net.clayen.dev
+    interval: 15s
+    conditions:
+      - "[CONNECTED] == true"
+    alerts: *alerts
+    client: *client
+
+  # ITAM
+
+  - name: 1. ITAM Landing Page
+    group: ITAM
+    url: https://itatmisis.ru
+    interval: 5m
+    conditions: *ok
+    alerts: *alerts
+    client: *client
+
+  - name: 2. ITAM Education
+    group: ITAM
+    url: https://edu.itatmisis.ru
+    interval: 5m
+    conditions: *ok
+    alerts: *alerts
+    client: *client
+
+  # Other
+
+  - name: IDTE
+    group: Other
+    url: https://idte.ru
+    interval: 5m
+    conditions: *ok
+    alerts: *alerts
+    client: *client

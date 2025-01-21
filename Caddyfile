@@ -1,0 +1,3 @@
+status.clayen.dev {
+	reverse_proxy http://gatus:8080
+}
