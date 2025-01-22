@@ -76,6 +76,14 @@ endpoints:
 
   # Other
 
+  - name: MISIS
+    group: Other
+    url: https://misis.ru
+    interval: 5m
+    conditions: *ok
+    alerts: *alerts
+    client: *client
+
   - name: IDTE
     group: Other
     url: https://idte.ru
