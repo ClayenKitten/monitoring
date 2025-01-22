@@ -16,7 +16,7 @@ ui:
 endpoints:
   # ClayenKitten
 
-  - name: 1. Website
+  - name: Website
     group: ClayenKitten
     url: https://clayenkitten.dev
     interval: 15s
@@ -29,7 +29,7 @@ endpoints:
     client: &client
       timeout: 3s
 
-  - name: 2. URL Shortener
+  - name: URL Shortener
     group: ClayenKitten
     url: https://l.clayen.dev/cats
     interval: 15s
@@ -39,7 +39,7 @@ endpoints:
     alerts: *alerts
     client: *client
 
-  - name: 3. Network
+  - name: Network
     group: ClayenKitten
     url: icmp://net.clayen.dev
     interval: 15s
@@ -50,7 +50,7 @@ endpoints:
 
   # ITAM
 
-  - name: 1. ITAM Landing Page
+  - name: ITAM Landing Page
     group: ITAM
     url: https://itatmisis.ru
     interval: 5m
@@ -58,10 +58,18 @@ endpoints:
     alerts: *alerts
     client: *client
 
-  - name: 2. ITAM Education
+  - name: ITAM Education
     group: ITAM
     url: https://edu.itatmisis.ru
-    interval: 5m
+    interval: 15s
+    conditions: *ok
+    alerts: *alerts
+    client: *client
+
+  - name: ITAM Education (Development)
+    group: ITAM
+    url: https://edu.itam.clayen.dev
+    interval: 15s
     conditions: *ok
     alerts: *alerts
     client: *client
