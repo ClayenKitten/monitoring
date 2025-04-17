@@ -8,9 +8,18 @@ services:
     configs: [{ source: caddy, target: /etc/caddy/Caddyfile }]
     restart: unless-stopped
 
+  grafana:
+    image: grafana/grafana:11.6.0
+    expose: [3000]
+    restart: unless-stopped
+    volumes:
+      - ./grafana.ini:/etc/grafana/grafana.ini:ro
+      - grafana_storage:/var/lib/grafana
+
   gatus:
     image: twinproduction/gatus:v5.15.0
     env_file: .env
+    expose: [8080]
     environment: &gatus-env
       POSTGRES_USER: ${GATUS_POSTGRES_USER:?error}
       POSTGRES_PASSWORD: ${GATUS_POSTGRES_PASSWORD:?error}
@@ -37,6 +46,7 @@ services:
     restart: unless-stopped
 
 volumes:
+  grafana_storage:
   gatus-db:
   caddy_data:
   caddy_config:

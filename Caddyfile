@@ -1,3 +1,10 @@
+grafana.clayen.dev {
+	reverse_proxy http://grafana:3000
+	basic_auth {
+		ClayenKitten $2a$14$41Mp7XpUyP9GaGKAVEmXCuR0YPNm1c8QJyGti/A.WFgWBxx6hZrDy
+	}
+}
+
 status.clayen.dev {
 	reverse_proxy http://gatus:8080
 }
