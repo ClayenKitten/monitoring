@@ -16,6 +16,14 @@ services:
       - ./grafana.ini:/etc/grafana/grafana.ini:ro
       - grafana_storage:/var/lib/grafana
 
+  prometheus:
+    image: prom/prometheus:v3.3.0
+    expose: [9090]
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+
   gatus:
     image: twinproduction/gatus:v5.15.0
     env_file: .env
@@ -47,6 +55,7 @@ services:
 
 volumes:
   grafana_storage:
+  prometheus_data:
   gatus-db:
   caddy_data:
   caddy_config:
