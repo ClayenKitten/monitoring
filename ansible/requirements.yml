@@ -1,0 +1,6 @@
+collections:
+  - name: prometheus.prometheus
+    version: "0.26.1"
+roles:
+  - name: geerlingguy.docker
+    version: "7.4.7"

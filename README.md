@@ -10,6 +10,10 @@ Status page powered by [gatus](https://github.com/TwiN/gatus) is hosted at [stat
 
 _WIP_
 
-## 📈 Prometheus
+### 📈 Prometheus
 
 _WIP_
+
+## ⚙️ Ansible
+
+Ansible can be used to install dependencies on the server. Playbook is located at [./ansible](./ansible/server-setup.yaml).

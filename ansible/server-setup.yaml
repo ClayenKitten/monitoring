@@ -1,0 +1,33 @@
+- name: Prepare Debian server
+  hosts: all
+  become: true
+
+  vars:
+    # Docker settings
+    docker_edition: "ce"
+    docker_packages_state: present
+    docker_service_enabled: true
+    docker_service_state: started
+
+    # Node Exporter settings
+    node_exporter_version: "1.9.1"
+    node_exporter_web_listen_address: "0.0.0.0:9100"
+
+  pre_tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 43200
+
+    - name: Upgrade all packages to latest version
+      apt:
+        upgrade: dist
+
+    - name: Install apt packages
+      apt:
+        name: [curl, git, tar]
+        state: present
+
+  roles:
+    - geerlingguy.docker
+    - prometheus.prometheus.node_exporter
