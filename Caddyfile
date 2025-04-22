@@ -5,6 +5,14 @@ grafana.clayen.dev {
 	}
 }
 
+loki.clayen.dev {
+	reverse_proxy http://loki:3100
+	basic_auth {
+		itam-edu-dev $2a$14$WQ3OSu1sXXA8RASQQ9MSbOBaU3S.f7eD3kFtHds3gDQ30NHkdWAJu
+		itam-edu-dev-livekit $2a$14$tCLaO1pstEhwEPoOKdgCw.wunMhZuohj632htMip/N13k2087no3m
+	}
+}
+
 status.clayen.dev {
 	reverse_proxy http://gatus:8080
 }
