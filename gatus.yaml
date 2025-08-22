@@ -10,12 +10,18 @@ storage:
   path: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@gatus-db:5432/${POSTGRES_DB}?sslmode=disable"
 
 ui:
-  title: ClayenDev Status
+  title: ClayenKitten's Status Page
+  header: ClayenKitten's Status Page
+  logo: https://github.com/ClayenKitten.png
   link: https://clayenkitten.dev
+  default-sort-by: group
+  custom-css: |
+    img[src="https://github.com/ClayenKitten.png"] {
+      border-radius: 12px;
+    }
 
 endpoints:
   # ClayenKitten
-
   - name: Website
     group: ClayenKitten
     url: https://clayenkitten.dev
@@ -28,7 +34,6 @@ endpoints:
         send-on-resolved: true
     client: &client
       timeout: 3s
-
   - name: URL Shortener
     group: ClayenKitten
     url: https://l.clayen.dev/cats
@@ -38,8 +43,7 @@ endpoints:
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts: *alerts
     client: *client
-
-  - name: Network
+  - name: ClayenNet
     group: ClayenKitten
     url: icmp://net.clayen.dev
     interval: 15s
@@ -49,7 +53,6 @@ endpoints:
     client: *client
 
   # ITAM
-
   - name: ITAM Landing Page
     group: ITAM
     url: https://itatmisis.ru
@@ -57,7 +60,6 @@ endpoints:
     conditions: *ok
     alerts: *alerts
     client: *client
-
   - name: ITAM Education
     group: ITAM
     url: https://edu.itatmisis.ru
@@ -65,7 +67,6 @@ endpoints:
     conditions: *ok
     alerts: *alerts
     client: *client
-
   - name: ITAM Education (Development)
     group: ITAM
     url: https://edu.itam.clayen.dev
@@ -74,19 +75,51 @@ endpoints:
     alerts: *alerts
     client: *client
 
-  # Other
+  # IDTE
+  - name: Вебсайт АНО ИЦТО
+    group: IDTE
+    url: https://idte.ru
+    interval: 1m
+    conditions: *ok
+    alerts: &idte-alerts
+      - type: telegram
+        send-on-resolved: true
+        provider-override:
+          id: ${TELEGRAM_IDTE_GROUP_ID}
+    client: *client
+  - name: Паспорт школы
+    group: IDTE
+    url: https://idschool.idte.ru
+    interval: 1m
+    conditions: *ok
+    alerts: *idte-alerts
+    client: *client
+  - name: Циклограмма
+    group: IDTE
+    url: https://cyclegram.idte.ru
+    interval: 1m
+    conditions: *ok
+    alerts: *idte-alerts
+    client: *client
+  - name: ФинИгры
+    group: IDTE
+    url: https://fingames.idte.ru
+    interval: 1m
+    conditions: *ok
+    alerts: *idte-alerts
+    client: *client
+  - name: Тепловые карты
+    group: IDTE
+    url: https://map-mo.idte.ru/
+    interval: 1m
+    conditions: *ok
+    alerts: *idte-alerts
+    client: *client
 
+  # Other
   - name: MISIS
     group: Other
     url: https://misis.ru
-    interval: 5m
-    conditions: *ok
-    alerts: *alerts
-    client: *client
-
-  - name: IDTE
-    group: Other
-    url: https://idte.ru
     interval: 5m
     conditions: *ok
     alerts: *alerts

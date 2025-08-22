@@ -1,6 +1,7 @@
 services:
   gateway:
     image: caddy:2-alpine
+    env_file: .env
     volumes:
       - caddy_data:/data
       - caddy_config:/config
@@ -30,7 +31,7 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
 
   gatus:
-    image: twinproduction/gatus:v5.15.0
+    image: twinproduction/gatus:v5.23.2
     env_file: .env
     expose: [8080]
     environment: &gatus-env
