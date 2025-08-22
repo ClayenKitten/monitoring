@@ -86,35 +86,36 @@ endpoints:
         send-on-resolved: true
         provider-override:
           id: ${TELEGRAM_IDTE_GROUP_ID}
-    client: *client
+    client: &idte-client
+      timeout: 10s
   - name: Паспорт школы
     group: IDTE
     url: https://idschool.idte.ru
     interval: 1m
     conditions: *ok
     alerts: *idte-alerts
-    client: *client
+    client: *idte-client
   - name: Циклограмма
     group: IDTE
     url: https://cyclegram.idte.ru
     interval: 1m
     conditions: *ok
     alerts: *idte-alerts
-    client: *client
+    client: *idte-client
   - name: ФинИгры
     group: IDTE
     url: https://fingames.idte.ru
     interval: 1m
     conditions: *ok
     alerts: *idte-alerts
-    client: *client
+    client: *idte-client
   - name: Тепловые карты
     group: IDTE
-    url: https://map-mo.idte.ru/
+    url: https://map-mo.idte.ru
     interval: 1m
     conditions: *ok
     alerts: *idte-alerts
-    client: *client
+    client: *idte-client
 
   # Other
   - name: MISIS
