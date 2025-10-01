@@ -43,14 +43,6 @@ endpoints:
       - "[CERTIFICATE_EXPIRATION] > 48h"
     alerts: *alerts
     client: *client
-  - name: ClayenNet
-    group: ClayenKitten
-    url: icmp://net.clayen.dev
-    interval: 15s
-    conditions:
-      - "[CONNECTED] == true"
-    alerts: *alerts
-    client: *client
 
   # ITAM
   - name: ITAM Landing Page
