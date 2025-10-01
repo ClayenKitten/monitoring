@@ -8,7 +8,7 @@ grafana.{$DOMAIN} {
 loki.{$DOMAIN} {
 	reverse_proxy http://loki:3100
 	basic_auth {
-		itamedu $2a$14$WvghIOR2eqHfw2SJO.qTs.kJoCq7rGfmr0aVln90kZdsH9FeCmxKO
+		itamedu $2a$14$eK8Gc6KHIJUCtqe9Dw7kpuJRoKfQs2Nex3bwOnyHWYBeQ3iAsXfAe
 	}
 }
 
