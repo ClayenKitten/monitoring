@@ -8,9 +8,20 @@ scrape_configs:
       - targets:
           - grafana.clayen.dev:9100
 
+  - job_name: 'itam-edu'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - edu.itatmisis.ru:9100
+
   - job_name: 'itam-edu-dev'
     scrape_interval: 5s
     static_configs:
       - targets:
-        - edu.itam.clayen.dev:9100
-        - livekit.edu.itam.clayen.dev:9100
+        - edu.clayen.dev:9100
+  
+  - job_name: 'livekit'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - livekit.clayen.dev:9100
